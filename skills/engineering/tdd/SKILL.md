@@ -1,11 +1,15 @@
 ---
 name: tdd
-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+description: Test-first red-green loop. Use for features, bugs, or red-green-refactor.
 ---
 
 # Test-Driven Development
 
-TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle: consult them before and during the loop, not after.
+TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle: consult them before and during the loop, not after. Use it for feature work, bug fixes, and integration tests at agreed seams.
+
+## Recon before files
+
+**First step**, before writing tests or creating implementation files: Grep/Read `package.json` and `tsconfig.json` (and `tsconfig*.json`) to verify directory structure. Check `paths`, `rootDir`, `include`, and test script locations. Detect monorepos (`pnpm-workspace.yaml`, `nx.json`, `turbo.json`, `apps/`, `packages/`). Place tests and code in the real package, using existing test layout and import aliases. If the package root is ambiguous, ask — do not guess.
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
@@ -36,3 +40,4 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **STOP and ask user for confirmation if the test suite fails 3 times in a row.** Count consecutive **full** suite runs after you expected green — not the intentional red of a new failing test. After the third failure: stop. Do not keep patching types, imports, or implementation against the same wrong premises. Show the failure, the hypothesis, and wait. Reset the counter only after a green suite or an explicit user "continue". Do not take another unattended attempt.

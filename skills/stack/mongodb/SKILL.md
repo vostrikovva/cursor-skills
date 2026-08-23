@@ -1,11 +1,13 @@
 ---
 name: mongodb
-description: MongoDB with TypeScript document types and indexes. Use when the data model is document-oriented, not when the project already standardized on Postgres plus Drizzle.
+description: MongoDB with TypeScript document types and indexes, not Postgres+Drizzle.
 ---
 
 # MongoDB + TypeScript
 
 Type documents (interface or schema). Do not pass `any` through the driver.
+
+Collection/module paths are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Defaults
 

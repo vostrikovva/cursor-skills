@@ -4,6 +4,10 @@
   "type": "module",
   "description": "Cursor agent skills catalog with subspace install presets",
   "bin": {
-    "agent-skills-catalog": "./scripts/install-subspace.mjs"
+    "agent-skills-catalog": "./scripts/install-subspace.mjs",
+    "cursor-skills": "./scripts/install-subspace.mjs"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.8.0"
   }
 }

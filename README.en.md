@@ -12,6 +12,14 @@ Plan: [plans/skills-security-merge.md](plans/skills-security-merge.md). Risks: [
 
 Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. `--to` defaults to the current directory. On Windows, do not put a stray `--` before the preset name (if you do, the installer ignores it).
 
+Interactive (arrow keys: frontend / backend / database):
+
+```bash
+npx --yes github:vostrikovva/cursor-skills
+```
+
+Non-interactive, named preset:
+
 ```bash
 npx --yes github:vostrikovva/cursor-skills react --to .
 npx --yes github:vostrikovva/cursor-skills react-ssr --to .
@@ -50,13 +58,13 @@ Each subspace (except pure `db-*`) includes **core**: grilling, grill-me, grill-
 
 Do not install `react` and `react-ssr` into the same repository.
 
-Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **installed** skills into context.
+Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **installed** skills into context; those descriptions are kept short (~100 characters), with the rest in the `SKILL.md` body.
 
 ## How to use
 
 - **On their own for the task** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest, and so on — the agent may pick them up when the description matches.
 - **By name** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`. Write: “apply the grill-me skill”.
-- Loop: grill → spec/tickets → implement + tdd → code-review. Commit only if you asked for it explicitly.
+- Loop: grill → spec/tickets → implement + tdd → code-review. After three consecutive failing full test suites, STOP and ask the user. Commit only if you asked for it explicitly.
 - All generated code is TypeScript `strict`.
 
 ## Skill catalog

@@ -1,11 +1,13 @@
 ---
 name: vite-react
-description: Vite plus React plus TypeScript SPA. Use when the app is Vite (vite.config), not Next.js. Covers import.meta.env, dev proxy to an API, React Router, and code splitting.
+description: Vite plus React TypeScript SPA (vite.config), not Next.js.
 ---
 
 # Vite + React + TypeScript
 
 Use this skill when the repo has Vite (`vite.config.ts`), not Next.js. Do not introduce `next/image`, App Router, or Turbopack. Follow `typescript` and `vercel-composition-patterns` when those skills are installed. For UI/a11y follow `web-design-guidelines`.
+
+Layout paths below are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Layout
 

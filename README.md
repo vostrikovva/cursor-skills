@@ -12,6 +12,14 @@
 
 Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. `--to` по умолчанию — текущая папка. На Windows не вставляйте лишний `--` перед именем пресета (если вставили — установщик его игнорирует).
 
+Интерактивно (стрелки: фронт / бэк / БД):
+
+```bash
+npx --yes github:vostrikovva/cursor-skills
+```
+
+Без меню, сразу пресет:
+
 ```bash
 npx --yes github:vostrikovva/cursor-skills react --to .
 npx --yes github:vostrikovva/cursor-skills react-ssr --to .
@@ -50,13 +58,13 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 
 Не ставьте `react` и `react-ssr` в один репозиторий.
 
-Подпространства убирают **не установленные** скиллы. Cursor всё равно кладёт description **установленных** в контекст.
+Подпространства убирают **не установленные** скиллы. Cursor всё равно кладёт description **установленных** в контекст; они ужаты (~100 символов), мясо — в теле `SKILL.md`.
 
 ## Как пользоваться
 
 - **Сами по задаче** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest и т.д. — агент может взять их, если description совпал.
 - **По имени** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`. Напишите: «примени скилл grill-me».
-- Цикл: grill → spec/tickets → implement + tdd → code-review. Коммит только если вы явно попросили.
+- Цикл: grill → spec/tickets → implement + tdd → code-review. После трёх подряд красных полных suite — STOP и вопрос пользователю. Коммит только если вы явно попросили.
 - Весь генерируемый код — TypeScript `strict`.
 
 ## Каталог скиллов

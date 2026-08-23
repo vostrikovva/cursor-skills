@@ -1,11 +1,13 @@
 ---
 name: nestjs
-description: NestJS modules, DI, pipes, and guards in TypeScript. Use when the backend is Nest, not a raw Express app.
+description: NestJS modules, DI, pipes, and guards in TypeScript. Not raw Express.
 ---
 
 # NestJS + TypeScript
 
 Use when the server is NestJS. Do not introduce a second Express app alongside it unless the user asked.
+
+Module paths are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Defaults
 

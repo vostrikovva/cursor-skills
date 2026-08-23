@@ -1,11 +1,13 @@
 ---
 name: postgres-drizzle
-description: PostgreSQL with Drizzle ORM and Drizzle Kit. Use when defining schema, generating or applying SQL migrations, or querying Postgres. Prefer generate-and-review over drizzle-kit push on shared databases.
+description: PostgreSQL with Drizzle ORM and Kit: schema, generate SQL, migrate.
 ---
 
 # PostgreSQL + Drizzle
 
 TypeScript schema in `pgTable` (or equivalent). Query types come from the schema, not `any`.
+
+Schema and migration file paths below are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Kit
 
