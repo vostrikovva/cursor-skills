@@ -45,6 +45,8 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 
 Каждое (кроме чистых `db-*`) включает **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.
 
+**Каждый** пресет (включая чистые `db-*`) дополнительно ставит `which-skill` (только явный вызов).
+
 | Имя | Стек | Не ставит |
 |-----|------|-----------|
 | `react` | Vite + React + TS, composition, web UI guidelines | Next, `vercel-react-best-practices` |
@@ -63,7 +65,7 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 ## Как пользоваться
 
 - **Сами по задаче** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest и т.д. — агент может взять их, если description совпал.
-- **По имени** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`. Напишите: «примени скилл grill-me».
+- **По имени** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Напишите: «примени скилл grill-me». Для выбора скилла: «примени скилл which-skill» и текст запроса.
 - Цикл: grill → spec/tickets → implement + tdd → code-review. После трёх подряд красных полных suite — STOP и вопрос пользователю. Коммит только если вы явно попросили.
 - Весь генерируемый код — TypeScript `strict`.
 
@@ -86,6 +88,7 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 | code-review | Две оси по diff с фиксированной точки: Standards (стандарты репозитория плюс базовый набор запахов Fowler) и Spec (верно ли реализована исходная issue/spec). Параллельные субагенты, чтобы оси не смешивались. |
 | diagnosing-bugs | Дисциплинированный цикл для сложных багов и регрессий производительности: фидбек, который краснеет на этом баге → минимизировать → гипотеза → инструментирование → фикс → регрессионный тест. |
 | codebase-design | Общая дисциплина и словарь глубоких модулей: много поведения за узким интерфейсом, на чистом шве, тестируемость через этот интерфейс. |
+| which-skill | Рекомендует, какой скилл Cursor или этого каталога применить к запросу. Только по явному вызову; ставится во всех пресетах. |
 
 ### Frontend / mobile (Vercel + свои)
 
