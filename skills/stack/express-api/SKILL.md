@@ -1,6 +1,6 @@
 ---
 name: express-api
-description: Express HTTP APIs in TypeScript: routes, middleware, errors. Not NestJS.
+description: HTTP APIs with Express and TypeScript. Use when adding routes, middleware, error handling, or validation on Express, not NestJS.
 ---
 
 # Express + TypeScript

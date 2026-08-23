@@ -1,6 +1,6 @@
 ---
 name: mongodb
-description: MongoDB with TypeScript document types and indexes, not Postgres+Drizzle.
+description: MongoDB with TypeScript document types and indexes. Use when the data model is document-oriented, not when the project already standardized on Postgres plus Drizzle.
 ---
 
 # MongoDB + TypeScript

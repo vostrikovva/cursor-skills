@@ -1,6 +1,6 @@
 ---
 name: tauri
-description: Tauri desktop IPC and capabilities over a Vite React TypeScript webview.
+description: Tauri desktop apps with a Vite plus React plus TypeScript webview. Use when adding IPC commands, capabilities, or packaging a desktop shell. Keep OS capabilities on a minimal allowlist.
 ---
 
 # Tauri + Vite + React + TS
