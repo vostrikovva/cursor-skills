@@ -3,10 +3,10 @@
  * Install catalog subspaces into a Cursor project.
  *
  * From the target app (after this catalog is on GitHub):
- *   npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
+ *   npx --yes github:vostrikovva/cursor-skills react-ssr --to .
  *
  * Locally, from this catalog:
- *   npx --yes . -- react --to ../my-app
+ *   npx --yes . react --to ../my-app
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -21,8 +21,8 @@ function usage() {
   console.log(`Install Cursor skill subspaces from this catalog.
 
 Usage:
-  npx --yes github:vostrikovva/cursor-skills -- <subspace...> [--to <dir>] [--dry-run]
-  npx --yes . -- <subspace...> [--to <dir>] [--dry-run]
+  npx --yes github:vostrikovva/cursor-skills <subspace...> [--to <dir>] [--dry-run]
+  npx --yes . <subspace...> [--to <dir>] [--dry-run]
   node scripts/install-subspace.mjs <subspace...> [--to <dir>] [--dry-run]
 
 Options:
@@ -34,8 +34,8 @@ Options:
 Subspaces: ${names}
 
 Examples:
-  npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
-  npx --yes github:vostrikovva/cursor-skills -- backend-express db-postgres --to .
+  npx --yes github:vostrikovva/cursor-skills react-ssr --to .
+  npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
 `);
 }
 
@@ -66,6 +66,10 @@ function parseArgs(argv) {
   let help = false;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
+    // Windows npx forwards `--`; Unix npx often strips it. Ignore either way.
+    if (a === "--") {
+      continue;
+    }
     if (a === "--help" || a === "-h") {
       help = true;
       continue;

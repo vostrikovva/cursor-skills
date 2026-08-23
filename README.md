@@ -10,23 +10,23 @@
 
 ## Установка в проект
 
-Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. `--` нужен, чтобы флаги не съел `npx`. `--to` по умолчанию — текущая папка.
+Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. `--to` по умолчанию — текущая папка. На Windows не вставляйте лишний `--` перед именем пресета (если вставили — установщик его игнорирует).
 
 ```bash
-npx --yes github:vostrikovva/cursor-skills -- react --to .
-npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
-npx --yes github:vostrikovva/cursor-skills -- tauri-desktop --to .
-npx --yes github:vostrikovva/cursor-skills -- backend-express db-postgres --to .
-npx --yes github:vostrikovva/cursor-skills -- backend-nest db-mongo --to .
-npx --yes github:vostrikovva/cursor-skills -- mobile --to .
+npx --yes github:vostrikovva/cursor-skills react --to .
+npx --yes github:vostrikovva/cursor-skills react-ssr --to .
+npx --yes github:vostrikovva/cursor-skills tauri-desktop --to .
+npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
+npx --yes github:vostrikovva/cursor-skills backend-nest db-mongo --to .
+npx --yes github:vostrikovva/cursor-skills mobile --to .
 ```
 
 Локально, из клона этого каталога:
 
 ```bash
-npx --yes . -- react --to ../my-app
-npx --yes github:vostrikovva/cursor-skills -- --list
-npx --yes github:vostrikovva/cursor-skills -- react --dry-run
+npx --yes . react --to ../my-app
+npx --yes github:vostrikovva/cursor-skills --list
+npx --yes github:vostrikovva/cursor-skills react --dry-run
 ```
 
 Не используйте `--all`. Не ставьте скиллы в `~/.cursor/skills-cursor/` и не ставьте каталог глобально (`-g`): пресеты взаимоисключающие.

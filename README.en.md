@@ -10,23 +10,23 @@ Plan: [plans/skills-security-merge.md](plans/skills-security-merge.md). Risks: [
 
 ## Install into a project
 
-Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. `--` keeps flags from being eaten by `npx`. `--to` defaults to the current directory.
+Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. `--to` defaults to the current directory. On Windows, do not put a stray `--` before the preset name (if you do, the installer ignores it).
 
 ```bash
-npx --yes github:vostrikovva/cursor-skills -- react --to .
-npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
-npx --yes github:vostrikovva/cursor-skills -- tauri-desktop --to .
-npx --yes github:vostrikovva/cursor-skills -- backend-express db-postgres --to .
-npx --yes github:vostrikovva/cursor-skills -- backend-nest db-mongo --to .
-npx --yes github:vostrikovva/cursor-skills -- mobile --to .
+npx --yes github:vostrikovva/cursor-skills react --to .
+npx --yes github:vostrikovva/cursor-skills react-ssr --to .
+npx --yes github:vostrikovva/cursor-skills tauri-desktop --to .
+npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
+npx --yes github:vostrikovva/cursor-skills backend-nest db-mongo --to .
+npx --yes github:vostrikovva/cursor-skills mobile --to .
 ```
 
 Locally, from a clone of this catalog:
 
 ```bash
-npx --yes . -- react --to ../my-app
-npx --yes github:vostrikovva/cursor-skills -- --list
-npx --yes github:vostrikovva/cursor-skills -- react --dry-run
+npx --yes . react --to ../my-app
+npx --yes github:vostrikovva/cursor-skills --list
+npx --yes github:vostrikovva/cursor-skills react --dry-run
 ```
 
 Do not use `--all`. Do not install into `~/.cursor/skills-cursor/`, and do not install the catalog globally (`-g`): the presets are mutually exclusive.

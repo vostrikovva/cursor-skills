@@ -1,0 +1,5 @@
+# Packaged via `npx github:…`. Do not exclude skills/, presets.json, or scripts/.
+.cursor/
+*.log
+.DS_Store
+plans/
