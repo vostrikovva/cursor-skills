@@ -41,6 +41,18 @@ Do not use `--all`. Do not install into `~/.cursor/skills-cursor/`, and do not i
 
 High-risk Vercel skills (deploy / tokens / optimize) are only in [optional/README.md](optional/README.md).
 
+## Checking SKILL.md
+
+If YAML frontmatter is invalid, `npx skills add` **skips** that file (`Skipped … YAML parse error`) and still installs the rest of the preset. A common cause is a one-line `description` with an unquoted `: ` (compact mapping). Quote the value, use `>-`, or a multiline `description:` (as in composition-patterns).
+
+Before you push (or after `npm install` — a pre-commit hook via `simple-git-hooks`):
+
+```bash
+npm run check-skills
+```
+
+Installed copies live in `.agents/skills/<name>/`, not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skipped … SKILL.md` in the CLI output first.
+
 ## Subspaces
 
 Each subspace (except pure `db-*`) includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.

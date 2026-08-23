@@ -7,7 +7,18 @@
     "agent-skills-catalog": "./scripts/install-subspace.mjs",
     "cursor-skills": "./scripts/install-subspace.mjs"
   },
+  "scripts": {
+    "check-skills": "node scripts/check-skills.mjs",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run check-skills"
+  },
   "dependencies": {
     "@inquirer/prompts": "^7.8.0"
+  },
+  "devDependencies": {
+    "simple-git-hooks": "^2.13.1",
+    "yaml": "^2.8.1"
   }
 }
