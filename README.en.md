@@ -45,6 +45,8 @@ High-risk Vercel skills (deploy / tokens / optimize) are only in [optional/READM
 
 Each subspace (except pure `db-*`) includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.
 
+**Every** preset (including pure `db-*`) also installs `which-skill` (explicit invoke only).
+
 | Name | Stack | Does not install |
 |------|--------|------------------|
 | `react` | Vite + React + TS, composition, web UI guidelines | Next, `vercel-react-best-practices` |
@@ -63,7 +65,7 @@ Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **insta
 ## How to use
 
 - **On their own for the task** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest, and so on — the agent may pick them up when the description matches.
-- **By name** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`. Write: “apply the grill-me skill”.
+- **By name** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Write: “apply the grill-me skill”. To pick a skill: “apply the which-skill skill” plus the request.
 - Loop: grill → spec/tickets → implement + tdd → code-review. After three consecutive failing full test suites, STOP and ask the user. Commit only if you asked for it explicitly.
 - All generated code is TypeScript `strict`.
 
@@ -86,6 +88,7 @@ Descriptions below come from upstream [Reference](https://github.com/mattpocock/
 | code-review | Two-axis review of the diff since a fixed point: Standards (does it follow the repo's coding standards, plus a Fowler smell baseline?) and Spec (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so neither pollutes the other. |
 | diagnosing-bugs | Disciplined diagnosis loop for hard bugs and performance regressions: build a feedback loop that goes red on this bug → minimise → hypothesise → instrument → fix → regression-test. |
 | codebase-design | Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. |
+| which-skill | Recommend which Cursor skill (built-in or from this catalog) to apply to a request. Explicit invoke only; installed with every preset. |
 
 ### Frontend / mobile (Vercel + custom)
 

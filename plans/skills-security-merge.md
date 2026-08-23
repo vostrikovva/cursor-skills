@@ -27,6 +27,8 @@ flowchart TB
 
 Не в core: `teach`, `wayfinder`, `wizard`, `research`, `improve-codebase-architecture`, Claude-only `misc`. `implement`: коммит только по явной просьбе.
 
+`which-skill` не в Pocock-ядре: установщик добавляет его **ко всем** подпространствам (включая чистые `db-*`). Только явный вызов (`disable-model-invocation`).
+
 ## Подпространства
 
 - **react** (Vite + React + TS): `core` + `vite-react` + composition + web-design-guidelines. Без `vercel-react-best-practices`.

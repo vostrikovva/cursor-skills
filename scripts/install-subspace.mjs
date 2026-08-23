@@ -20,6 +20,8 @@ import { fileURLToPath } from "node:url";
 const catalogRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const presets = JSON.parse(readFileSync(join(catalogRoot, "presets.json"), "utf8"));
 const SKIP = "";
+/** Installed with every subspace, including pure db-* (not in core). */
+const everyPresetSkills = ["which-skill"];
 
 function usage() {
   const names = Object.keys(presets).join(", ");
@@ -67,6 +69,10 @@ function unique(list) {
   return [...new Set(list)];
 }
 
+function withEveryPreset(list) {
+  return unique([...everyPresetSkills, ...list]);
+}
+
 function parseArgs(argv) {
   const names = [];
   let to = null;
@@ -112,7 +118,7 @@ function parseArgs(argv) {
 
 function listPresets() {
   for (const name of Object.keys(presets)) {
-    console.log(`${name}: ${unique(expand(name)).join(", ")}`);
+    console.log(`${name}: ${withEveryPreset(expand(name)).join(", ")}`);
   }
 }
 
@@ -158,7 +164,7 @@ async function promptPresets() {
 }
 
 function install({ names, to, dryRun }) {
-  const skills = unique(names.flatMap((n) => expand(n)));
+  const skills = withEveryPreset(names.flatMap((n) => expand(n)));
 
   if (skills.includes("vite-react") && skills.includes("nextjs")) {
     console.warn(
