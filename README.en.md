@@ -71,19 +71,21 @@ Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **insta
 
 ### Process (Pocock, adapted)
 
-| name | When |
-|------|------|
-| grilling | Decision-tree interview |
-| grill-me | Same, only on explicit invoke |
-| grill-with-docs | Grill + CONTEXT.md / ADR |
-| domain-modeling | Glossary and terms |
-| to-spec | Gather a spec from the chat |
-| to-tickets | Slice into tickets |
-| tdd | Red-green at the seams |
-| implement | Do the work from spec/tickets |
-| code-review | Standards + spec against the diff |
-| diagnosing-bugs | Debugging discipline |
-| codebase-design | Deep modules / seams |
+Descriptions below come from upstream [Reference](https://github.com/mattpocock/skills/tree/main), fitted to this catalog: invoke by `name`, and no skills that are not vendored here.
+
+| name | Description |
+|------|-------------|
+| grilling | Interview the user relentlessly about a plan, decision, or idea until every branch of the design tree is resolved. The reusable interview primitive behind `grill-me` and `grill-with-docs`. |
+| grill-me | Get relentlessly interviewed about a plan or design until every branch of the design tree is resolved. Explicit invoke only. |
+| grill-with-docs | Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline. |
+| domain-modeling | Actively build and sharpen a project's domain model: challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline. |
+| to-spec | Turn the current conversation into a spec and publish it to the issue tracker. No interview, just synthesizes what you've already discussed. |
+| to-tickets | Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges, written as text in a local file, or as native blocking links on a real tracker. |
+| tdd | Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time. |
+| implement | Build the work described by a spec or set of tickets, driving `tdd` at pre-agreed seams and closing out with `code-review` before committing. Commit only if you asked for it explicitly. |
+| code-review | Two-axis review of the diff since a fixed point: Standards (does it follow the repo's coding standards, plus a Fowler smell baseline?) and Spec (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so neither pollutes the other. |
+| diagnosing-bugs | Disciplined diagnosis loop for hard bugs and performance regressions: build a feedback loop that goes red on this bug → minimise → hypothesise → instrument → fix → regression-test. |
+| codebase-design | Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. |
 
 ### Frontend / mobile (Vercel + custom)
 
