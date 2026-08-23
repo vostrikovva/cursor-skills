@@ -41,6 +41,18 @@ npx --yes github:vostrikovva/cursor-skills react --dry-run
 
 High-risk Vercel (deploy/токены/optimize) — только [optional/README.md](optional/README.md).
 
+## Проверка SKILL.md
+
+`npx skills add` при битом YAML **пропускает** файл (`Skipped … YAML parse error`) и ставит остальные скиллы пресета. Частая причина: однострочный `description` с неэкранированным `: ` (compact mapping). Пишите `description` в кавычках, через `>-` или многострочно (как у composition-patterns).
+
+Перед пушем (или после `npm install` — pre-commit через `simple-git-hooks`):
+
+```bash
+npm run check-skills
+```
+
+Копия в проекте: `.agents/skills/<name>/`, не `~/.cursor/skills-cursor/`. Если скилл «не поставился», сначала смотрите `Skipped … SKILL.md` в выводе CLI.
+
 ## Подпространства
 
 Каждое (кроме чистых `db-*`) включает **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.

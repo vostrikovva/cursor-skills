@@ -1,6 +1,10 @@
 ---
 name: which-skill
-description: Recommend which Cursor skill to apply for a user request. Use only when the user explicitly invokes this skill or asks to apply which-skill. Covers Cursor built-in skills and skills from this catalog. Triggers: какой скилл нужен, which skill, what skill do I need.
+description: >-
+  Recommend which Cursor skill to apply for a user request. Use only when the
+  user explicitly invokes this skill or asks to apply which-skill. Covers Cursor
+  built-in skills and skills from this catalog. Triggers include какой скилл
+  нужен, which skill, what skill do I need.
 disable-model-invocation: true
 ---
 
