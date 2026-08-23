@@ -58,7 +58,7 @@ Each subspace (except pure `db-*`) includes **core**: grilling, grill-me, grill-
 
 Do not install `react` and `react-ssr` into the same repository.
 
-Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **installed** skills into context; those descriptions are kept short (~100 characters), with the rest in the `SKILL.md` body.
+Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **installed** skills into context.
 
 ## How to use
 

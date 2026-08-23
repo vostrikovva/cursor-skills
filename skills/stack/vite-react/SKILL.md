@@ -1,6 +1,6 @@
 ---
 name: vite-react
-description: Vite plus React TypeScript SPA (vite.config), not Next.js.
+description: Vite plus React plus TypeScript SPA. Use when the app is Vite (vite.config), not Next.js. Covers import.meta.env, dev proxy to an API, React Router, and code splitting.
 ---
 
 # Vite + React + TypeScript

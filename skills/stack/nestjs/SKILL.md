@@ -1,6 +1,6 @@
 ---
 name: nestjs
-description: NestJS modules, DI, pipes, and guards in TypeScript. Not raw Express.
+description: NestJS modules, DI, pipes, and guards in TypeScript. Use when the backend is Nest, not a raw Express app.
 ---
 
 # NestJS + TypeScript

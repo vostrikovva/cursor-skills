@@ -1,6 +1,6 @@
 ---
 name: typescript
-description: TypeScript strict typing. Use when writing, reviewing, or fixing TS.
+description: TypeScript strict typing for app and library code. Use when writing or reviewing TypeScript, fixing type errors, or when the project uses tsconfig strict. Prefer typed APIs over any.
 ---
 
 # TypeScript

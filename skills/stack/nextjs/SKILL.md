@@ -1,6 +1,6 @@
 ---
 name: nextjs
-description: Next.js App Router and Next bundler (not Vite). RSC, next/image, next.config.
+description: Next.js App Router, RSC, and the Next bundler (Turbopack in dev, webpack in typical production builds). Use when the repo is Next.js, not Vite. Covers next/image, next/link, and next.config.
 ---
 
 # Next.js (react-ssr)

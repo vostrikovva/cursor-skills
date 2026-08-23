@@ -1,6 +1,6 @@
 ---
 name: expo-rn
-description: Expo Router, EAS, and Expo APIs on React Native TypeScript.
+description: Expo and Expo Router on top of React Native, TypeScript. Use with vercel-react-native-skills for lists, animations, and native performance. Covers EAS, Expo Router, and JS vs native APIs.
 ---
 
 # Expo + React Native + TypeScript

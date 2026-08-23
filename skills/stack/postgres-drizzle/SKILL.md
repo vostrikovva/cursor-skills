@@ -1,6 +1,6 @@
 ---
 name: postgres-drizzle
-description: PostgreSQL with Drizzle ORM and Kit: schema, generate SQL, migrate.
+description: PostgreSQL with Drizzle ORM and Drizzle Kit. Use when defining schema, generating or applying SQL migrations, or querying Postgres. Prefer generate-and-review over drizzle-kit push on shared databases.
 ---
 
 # PostgreSQL + Drizzle
