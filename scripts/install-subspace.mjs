@@ -3,7 +3,7 @@
  * Install catalog subspaces into a Cursor project.
  *
  * From the target app (after this catalog is on GitHub):
- *   npx --yes github:<owner>/<repo> -- react-ssr --to .
+ *   npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
  *
  * Locally, from this catalog:
  *   npx --yes . -- react --to ../my-app
@@ -21,7 +21,7 @@ function usage() {
   console.log(`Install Cursor skill subspaces from this catalog.
 
 Usage:
-  npx --yes github:<owner>/<repo> -- <subspace...> [--to <dir>] [--dry-run]
+  npx --yes github:vostrikovva/cursor-skills -- <subspace...> [--to <dir>] [--dry-run]
   npx --yes . -- <subspace...> [--to <dir>] [--dry-run]
   node scripts/install-subspace.mjs <subspace...> [--to <dir>] [--dry-run]
 
@@ -34,8 +34,8 @@ Options:
 Subspaces: ${names}
 
 Examples:
-  npx --yes github:<owner>/<repo> -- react-ssr --to .
-  npx --yes github:<owner>/<repo> -- backend-express db-postgres --to .
+  npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
+  npx --yes github:vostrikovva/cursor-skills -- backend-express db-postgres --to .
 `);
 }
 

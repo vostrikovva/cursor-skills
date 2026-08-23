@@ -10,25 +10,23 @@
 
 ## Установка в проект
 
-Из каталога **целевого приложения**. `--` нужен, чтобы флаги не съел `npx`. `--to` по умолчанию — текущая папка.
-
-После публикации на GitHub подставьте свой `owner/repo`:
+Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. `--` нужен, чтобы флаги не съел `npx`. `--to` по умолчанию — текущая папка.
 
 ```bash
-npx --yes github:<owner>/<repo> -- react --to .
-npx --yes github:<owner>/<repo> -- react-ssr --to .
-npx --yes github:<owner>/<repo> -- tauri-desktop --to .
-npx --yes github:<owner>/<repo> -- backend-express db-postgres --to .
-npx --yes github:<owner>/<repo> -- backend-nest db-mongo --to .
-npx --yes github:<owner>/<repo> -- mobile --to .
+npx --yes github:vostrikovva/cursor-skills -- react --to .
+npx --yes github:vostrikovva/cursor-skills -- react-ssr --to .
+npx --yes github:vostrikovva/cursor-skills -- tauri-desktop --to .
+npx --yes github:vostrikovva/cursor-skills -- backend-express db-postgres --to .
+npx --yes github:vostrikovva/cursor-skills -- backend-nest db-mongo --to .
+npx --yes github:vostrikovva/cursor-skills -- mobile --to .
 ```
 
-Пока репозиторий только локальный — из этого каталога:
+Локально, из клона этого каталога:
 
 ```bash
 npx --yes . -- react --to ../my-app
-npx --yes . -- --list
-npx --yes . -- react --dry-run
+npx --yes github:vostrikovva/cursor-skills -- --list
+npx --yes github:vostrikovva/cursor-skills -- react --dry-run
 ```
 
 Не используйте `--all`. Не ставьте скиллы в `~/.cursor/skills-cursor/` и не ставьте каталог глобально (`-g`): пресеты взаимоисключающие.
