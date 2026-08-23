@@ -1,0 +1,57 @@
+{
+  "core": {
+    "skills": [
+      "grilling",
+      "grill-me",
+      "grill-with-docs",
+      "domain-modeling",
+      "to-spec",
+      "to-tickets",
+      "tdd",
+      "implement",
+      "code-review",
+      "diagnosing-bugs",
+      "codebase-design",
+      "typescript"
+    ]
+  },
+  "react": {
+    "extends": ["core"],
+    "skills": [
+      "vite-react",
+      "vercel-composition-patterns",
+      "web-design-guidelines"
+    ]
+  },
+  "react-ssr": {
+    "extends": ["core"],
+    "skills": [
+      "nextjs",
+      "vercel-react-best-practices",
+      "vercel-composition-patterns",
+      "web-design-guidelines"
+    ]
+  },
+  "tauri-desktop": {
+    "extends": ["react"],
+    "skills": ["tauri"]
+  },
+  "backend-express": {
+    "extends": ["core"],
+    "skills": ["express-api"]
+  },
+  "backend-nest": {
+    "extends": ["core"],
+    "skills": ["nestjs"]
+  },
+  "db-postgres": {
+    "skills": ["postgres-drizzle"]
+  },
+  "db-mongo": {
+    "skills": ["mongodb"]
+  },
+  "mobile": {
+    "extends": ["core"],
+    "skills": ["vercel-react-native-skills", "expo-rn"]
+  }
+}

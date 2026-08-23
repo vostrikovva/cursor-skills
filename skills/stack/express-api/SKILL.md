@@ -1,0 +1,23 @@
+---
+name: express-api
+description: HTTP APIs with Express and TypeScript. Use when adding routes, middleware, error handling, or validation on Express, not NestJS.
+---
+
+# Express + TypeScript
+
+Use when the server is Express. If the repo is NestJS, follow `nestjs` instead.
+
+## Defaults
+
+- `express` + TypeScript. Type `Request`/`Response` handlers; do not use untyped `any` callbacks.
+- One place for errors: centralized error middleware. Route handlers `next(err)` or `async` wrapper. Do not `res.status` from random helpers inconsistently.
+- Validate body/query at the edge (e.g. zod). Infer types from the schema.
+- Do not log tokens, passwords, or `Authorization` headers.
+
+## Structure
+
+Keep routers thin: parse → call a typed service → map result to HTTP. Business rules do not live in middleware.
+
+## Secrets
+
+Read `process.env` in a small config module with explicit types. Never dump `.env` into chat.
