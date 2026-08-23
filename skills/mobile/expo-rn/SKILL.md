@@ -1,11 +1,13 @@
 ---
 name: expo-rn
-description: Expo and Expo Router on top of React Native, TypeScript. Use with vercel-react-native-skills for lists, animations, and native performance. Covers EAS, Expo Router, and JS vs native APIs.
+description: Expo Router, EAS, and Expo APIs on React Native TypeScript.
 ---
 
 # Expo + React Native + TypeScript
 
-Follow `vercel-react-native-skills` for FlashList, Reanimated, images, and platform performance. This skill is Expo-specific.
+Follow `vercel-react-native-skills` for FlashList, Reanimated, images, JS vs native APIs, and platform performance. This skill is Expo-specific.
+
+App directory layout is a default. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Defaults
 

@@ -1,11 +1,13 @@
 ---
 name: tauri
-description: Tauri desktop apps with a Vite plus React plus TypeScript webview. Use when adding IPC commands, capabilities, or packaging a desktop shell. Keep OS capabilities on a minimal allowlist.
+description: Tauri desktop IPC and capabilities over a Vite React TypeScript webview.
 ---
 
 # Tauri + Vite + React + TS
 
 Frontend is the **react** subspace (Vite + React + TS). Rust/sidecar talks to it through typed IPC. Do not turn the webview into a Next.js app.
+
+`src-tauri` vs webview paths are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## IPC
 

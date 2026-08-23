@@ -1,11 +1,11 @@
 ---
 name: typescript
-description: TypeScript strict typing for app and library code. Use when writing or reviewing TypeScript, fixing type errors, or when the project uses tsconfig strict. Prefer typed APIs over any.
+description: TypeScript strict typing. Use when writing, reviewing, or fixing TS.
 ---
 
 # TypeScript
 
-Default for this catalog: **TypeScript `strict`**, not JavaScript.
+Default for this catalog: **TypeScript `strict`**, not JavaScript. Prefer typed APIs over `any`. `tsconfig` location and `paths` come from recon, not assumed repo root.
 
 ## Rules
 

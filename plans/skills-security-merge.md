@@ -40,7 +40,7 @@ High-risk Vercel только в `optional/`.
 
 ## Риски
 
-Подпространства убирают не установленные скиллы; Cursor всё равно кладёт description установленных. Не ставить `react` и `react-ssr` вместе. Pinned SHA. Секреты не печатать. Tauri — минимальный allowlist. Drizzle — review SQL.
+Подпространства убирают не установленные скиллы; Cursor всё равно кладёт description установленных (ужаты ~100 символов). Не ставить `react` и `react-ssr` вместе. Pinned SHA. Секреты не печатать. Tauri — минимальный allowlist. Drizzle — review SQL.
 
 ## Установка
 

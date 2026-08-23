@@ -1,11 +1,13 @@
 ---
 name: express-api
-description: HTTP APIs with Express and TypeScript. Use when adding routes, middleware, error handling, or validation on Express, not NestJS.
+description: Express HTTP APIs in TypeScript: routes, middleware, errors. Not NestJS.
 ---
 
 # Express + TypeScript
 
 Use when the server is Express. If the repo is NestJS, follow `nestjs` instead.
+
+Source layout is a default. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 ## Defaults
 

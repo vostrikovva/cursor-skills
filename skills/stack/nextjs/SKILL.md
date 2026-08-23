@@ -1,11 +1,13 @@
 ---
 name: nextjs
-description: Next.js App Router, RSC, and the Next bundler (Turbopack in dev, webpack in typical production builds). Use when the repo is Next.js, not Vite. Covers next/image, next/link, and next.config.
+description: Next.js App Router and Next bundler (not Vite). RSC, next/image, next.config.
 ---
 
 # Next.js (react-ssr)
 
 This subspace is **Next.js and its bundler**, not Vite SSR. Config lives in `next.config.ts`, not `vite.config.ts`.
+
+Layout paths below are defaults. Real directories come from the `implement`/`tdd` recon of `package.json` and `tsconfig.json` (monorepo, `paths`).
 
 When `vercel-react-best-practices` is installed, apply those rules here (RSC, waterfalls, `next/image`).
 

@@ -12,7 +12,7 @@ Install only with `--full-depth` and an explicit `--skill` if you accept that. `
 
 ## Subspaces vs extra skills
 
-Installing `react` does not install Next. That removes unused skills from the project. Cursor still injects the **description of every installed skill** into context. Do not combine `react` and `react-ssr`. Do not use `--all`.
+Installing `react` does not install Next. That removes unused skills from the project. Cursor still injects the **description of every installed skill** into context (descriptions are capped at ~100 characters). Do not combine `react` and `react-ssr`. Do not use `--all`.
 
 ## Other rules this catalog encodes
 
