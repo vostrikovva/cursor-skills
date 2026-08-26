@@ -10,9 +10,9 @@ Plan: [plans/skills-security-merge.md](plans/skills-security-merge.md). Risks: [
 
 ## Install into a project
 
-Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. `--to` defaults to the current directory. On Windows, do not put a stray `--` before the preset name (if you do, the installer ignores it).
+Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. Default is **local** and **`.cursor/skills/`** (preferred over `.agents/skills`). `--to` is the project root. Flags: `npx --yes github:vostrikovva/cursor-skills --help`. On Windows, do not put a stray `--` before the preset name (if you do, the installer ignores it).
 
-Interactive (arrow keys: frontend / backend / database):
+Interactive (scope, skill directory, then frontend / backend / database):
 
 ```bash
 npx --yes github:vostrikovva/cursor-skills
@@ -35,9 +35,11 @@ Locally, from a clone of this catalog:
 npx --yes . react --to ../my-app
 npx --yes github:vostrikovva/cursor-skills --list
 npx --yes github:vostrikovva/cursor-skills react --dry-run
+npx --yes github:vostrikovva/cursor-skills react --to . --skill-dir agents
+npx --yes github:vostrikovva/cursor-skills react --global
 ```
 
-Do not use `--all`. Do not install into `~/.cursor/skills-cursor/`, and do not install the catalog globally (`-g`): the presets are mutually exclusive.
+Cursor loads `.cursor/skills/` and `.agents/skills/` (project), plus `~/.cursor/skills/` and `~/.agents/skills/` (user). Do not use `--all`. Do not install into `~/.cursor/skills-cursor/`. A global preset applies to every project — do not mix `react` and `react-ssr`.
 
 High-risk Vercel skills (deploy / tokens / optimize) are only in [optional/README.md](optional/README.md).
 
@@ -51,7 +53,7 @@ Before you push (or after `npm install` — a pre-commit hook via `simple-git-ho
 npm run check-skills
 ```
 
-Installed copies live in `.agents/skills/<name>/`, not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skipped … SKILL.md` in the CLI output first.
+Installed copies default to `.cursor/skills/<name>/` (`npx skills add` also leaves `.agents/skills/<name>/`). Not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skipped … SKILL.md` in the CLI output first.
 
 ## Subspaces
 
