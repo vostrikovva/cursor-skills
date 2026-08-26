@@ -2,7 +2,7 @@
 
 Сохранено из согласованного плана. Каталог в этом репозитории уже собран по нему.
 
-Репозиторий — свой каталог. Pocock даёт **процесс** (ядро в каждом пресете). Vercel — только UI/React/RN: подпространства задаём через `presets.json` + `scripts/install-subspace.mjs` → `npx skills add -a cursor --copy --skill …`.
+Репозиторий — свой каталог. Pocock даёт **процесс** (ядро в каждом пресете). Vercel — только UI/React/RN: подпространства задаём через `presets.json` + `scripts/install-subspace.mjs` (копия скиллов в выбранный `.cursor/skills` или `.agents/skills`).
 
 Claude-формат `SKILL.md` совместим с Cursor; вызовы Skill tool / пути Claude правятся при вендоринге.
 

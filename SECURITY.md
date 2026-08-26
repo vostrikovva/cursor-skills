@@ -20,9 +20,9 @@ Installing `react` does not install Next. That removes unused skills from the pr
 - Do not print secrets, `.env`, or `DATABASE_URL` in chat.
 - Drizzle: generate SQL and review; no silent `push` on shared DBs.
 - Tauri: minimal capabilities allowlist.
-- Windows: installer uses `npx skills add --copy` (not symlinks).
+- Windows: installer copies skill folders (not symlinks).
 - Never install into `~/.cursor/skills-cursor/` (Cursor internals).
-- Default dest is project `.cursor/skills/`; `--skill-dir agents` uses `.agents/skills/`. `--global` uses `~/.cursor/skills/` or `~/.agents/skills`. `npx skills add -a cursor` still writes `.agents/skills` locally (or `~/.cursor/skills` with `-g`); the installer copies into `.cursor/skills` when that is selected and keeps the native copy.
+- Default dest is project `.cursor/skills/`; `--skill-dir agents` uses `.agents/skills/`. `--global` uses `~/.cursor/skills/` or `~/.agents/skills`. The installer writes only to the chosen directory.
 
 ## Upstream updates
 

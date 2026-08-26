@@ -53,7 +53,7 @@ Before you push (or after `npm install` — a pre-commit hook via `simple-git-ho
 npm run check-skills
 ```
 
-Installed copies default to `.cursor/skills/<name>/` (`npx skills add` also leaves `.agents/skills/<name>/`). Not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skipped … SKILL.md` in the CLI output first.
+Installed copies default to `.cursor/skills/<name>/`. Not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skip, missing in catalog` in the installer output.
 
 ## Subspaces
 
