@@ -12,8 +12,7 @@
  *   npx --yes . react --to ../my-app
  */
 import { input, select } from "@inquirer/prompts";
-import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -47,9 +46,7 @@ Cursor loads skills from:
   ~/.cursor/skills/        user-level (global)
   ~/.agents/skills/        user-level (global)
 
-npx skills add -a cursor --copy writes to .agents/skills (local) or
-~/.cursor/skills (-g). This installer copies into .cursor/skills when that
-is selected and leaves the native copy in place.
+Copies each skill folder from this catalog into the chosen directory only.
 
 Options:
   --to <dir>              Local project root (default: current directory).
@@ -277,18 +274,53 @@ function skillsProject(project, kind) {
   return join(project, kind === "cursor" ? ".cursor" : ".agents", "skills");
 }
 
-function copyInstalledSkills(skills, fromDir, toDir) {
-  if (resolve(fromDir) === resolve(toDir)) return;
-  mkdirSync(toDir, { recursive: true });
+function skillNameFromMd(skillMdPath) {
+  const raw = readFileSync(skillMdPath, "utf8").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  if (!raw.startsWith("---\n")) return null;
+  const end = raw.indexOf("\n---", 3);
+  if (end === -1) return null;
+  const match = raw.slice(4, end).match(/^name:\s*(?:["']([^"']+)["']|(\S+))\s*$/m);
+  if (!match) return null;
+  return (match[1] ?? match[2]).trim();
+}
+
+function catalogSkillsByName() {
+  const map = new Map();
+  const walk = (dir) => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    const skillMd = join(dir, "SKILL.md");
+    if (existsSync(skillMd)) {
+      const name = skillNameFromMd(skillMd);
+      if (name) map.set(name, dir);
+      return;
+    }
+    for (const entry of entries) {
+      if (entry.isDirectory()) walk(join(dir, entry.name));
+    }
+  };
+  walk(join(catalogRoot, "skills"));
+  return map;
+}
+
+function installSkills(skills, destDir) {
+  const index = catalogSkillsByName();
+  mkdirSync(destDir, { recursive: true });
   for (const name of skills) {
-    const src = join(fromDir, name);
-    if (!existsSync(src)) {
-      console.warn(`Skip copy, missing: ${src}`);
+    const src = index.get(name);
+    if (!src) {
+      console.warn(`Skip, missing in catalog: ${name}`);
       continue;
     }
-    cpSync(src, join(toDir, name), { recursive: true });
+    const dest = join(destDir, name);
+    rmSync(dest, { recursive: true, force: true });
+    cpSync(src, dest, { recursive: true });
   }
-  console.log("Copied to:", toDir);
+  console.log("Installed to:", destDir);
 }
 
 function install({ names, to, dryRun, globalInstall, skillDir }) {
@@ -300,22 +332,12 @@ function install({ names, to, dryRun, globalInstall, skillDir }) {
     );
   }
 
-  const useGlobalFlag = globalInstall && skillDir === "cursor";
-  const cwd = globalInstall && skillDir === "agents" ? homedir() : to;
-  const nativeDir = useGlobalFlag ? skillsHome("cursor") : join(cwd, ".agents", "skills");
   const chosenDir = globalInstall ? skillsHome(skillDir) : skillsProject(to, skillDir);
-
-  const skillArgs = skills.flatMap((s) => ["--skill", s]);
-  const args = ["-y", "skills", "add", catalogRoot, "-a", "cursor", "--copy", ...skillArgs];
-  if (useGlobalFlag) args.push("-g");
 
   console.log("Catalog:", catalogRoot);
   console.log("Scope:", globalInstall ? "global" : "local");
   console.log("Project:", to);
   console.log("Chosen:", chosenDir);
-  if (resolve(nativeDir) !== resolve(chosenDir)) {
-    console.log("Native:", nativeDir);
-  }
   console.log("Subspaces:", names.join(", "));
   console.log("Skills:", skills.join(", "));
 
@@ -323,17 +345,7 @@ function install({ names, to, dryRun, globalInstall, skillDir }) {
     process.exit(0);
   }
 
-  const result = spawnSync("npx", args, {
-    cwd,
-    stdio: "inherit",
-    shell: process.platform === "win32",
-  });
-  const status = result.status ?? 1;
-  if (status !== 0) {
-    process.exit(status);
-  }
-
-  copyInstalledSkills(skills, nativeDir, chosenDir);
+  installSkills(skills, chosenDir);
   process.exit(0);
 }
 

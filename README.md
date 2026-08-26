@@ -53,7 +53,7 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 npm run check-skills
 ```
 
-Копия в проекте по умолчанию: `.cursor/skills/<name>/` (`npx skills add` также оставляет `.agents/skills/<name>/`). Не `~/.cursor/skills-cursor/`. Если скилл «не поставился», сначала смотрите `Skipped … SKILL.md` в выводе CLI.
+Копия в проекте по умолчанию: `.cursor/skills/<name>/`. Не `~/.cursor/skills-cursor/`. Если скилл «не поставился», смотрите `Skip, missing in catalog` в выводе установщика.
 
 ## Подпространства
 
