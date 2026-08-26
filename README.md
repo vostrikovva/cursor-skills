@@ -10,9 +10,9 @@
 
 ## Установка в проект
 
-Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. `--to` по умолчанию — текущая папка. На Windows не вставляйте лишний `--` перед именем пресета (если вставили — установщик его игнорирует).
+Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. По умолчанию — **local** и **`.cursor/skills/`** (предпочтительнее `.agents/skills`). `--to` — корень проекта. Флаги: `npx --yes github:vostrikovva/cursor-skills --help`. На Windows не вставляйте лишний `--` перед именем пресета (если вставили — установщик его игнорирует).
 
-Интерактивно (стрелки: фронт / бэк / БД):
+Интерактивно (scope, каталог, затем фронт / бэк / БД):
 
 ```bash
 npx --yes github:vostrikovva/cursor-skills
@@ -35,9 +35,11 @@ npx --yes github:vostrikovva/cursor-skills mobile --to .
 npx --yes . react --to ../my-app
 npx --yes github:vostrikovva/cursor-skills --list
 npx --yes github:vostrikovva/cursor-skills react --dry-run
+npx --yes github:vostrikovva/cursor-skills react --to . --skill-dir agents
+npx --yes github:vostrikovva/cursor-skills react --global
 ```
 
-Не используйте `--all`. Не ставьте скиллы в `~/.cursor/skills-cursor/` и не ставьте каталог глобально (`-g`): пресеты взаимоисключающие.
+Cursor читает: `.cursor/skills/`, `.agents/skills/` (проект); `~/.cursor/skills/`, `~/.agents/skills/` (пользователь). Не используйте `--all`. Не ставьте в `~/.cursor/skills-cursor/`. Глобальный пресет виден во всех проектах — не мешайте `react` и `react-ssr`.
 
 High-risk Vercel (deploy/токены/optimize) — только [optional/README.md](optional/README.md).
 
@@ -51,7 +53,7 @@ High-risk Vercel (deploy/токены/optimize) — только [optional/READM
 npm run check-skills
 ```
 
-Копия в проекте: `.agents/skills/<name>/`, не `~/.cursor/skills-cursor/`. Если скилл «не поставился», сначала смотрите `Skipped … SKILL.md` в выводе CLI.
+Копия в проекте по умолчанию: `.cursor/skills/<name>/` (`npx skills add` также оставляет `.agents/skills/<name>/`). Не `~/.cursor/skills-cursor/`. Если скилл «не поставился», сначала смотрите `Skipped … SKILL.md` в выводе CLI.
 
 ## Подпространства
 
