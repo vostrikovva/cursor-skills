@@ -6,27 +6,31 @@ A personal Agent Skills set: process skills from [Matt Pocock](https://github.co
 
 The format matches Claude (`SKILL.md`), but invocations are wired for Cursor: name the skill by `name` in chat; do not expect `/grill-me` the way Claude Code works.
 
-Plan: [plans/skills-security-merge.md](plans/skills-security-merge.md). Risks: [SECURITY.md](SECURITY.md). Licenses: [NOTICE.md](NOTICE.md). Upstream SHAs: [SOURCES.md](SOURCES.md).
+Catalog plan: [plans/skills-security-merge.md](plans/skills-security-merge.md). Core-only install and same-name replace: [plans/install-core-only.md](plans/install-core-only.md). Risks: [SECURITY.md](SECURITY.md). Licenses: [NOTICE.md](NOTICE.md). Upstream SHAs: [SOURCES.md](SOURCES.md).
 
 ## Install into a project
 
 Repo: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Run from the **target app**. Default is **local** and **`.cursor/skills/`** (preferred over `.agents/skills`). `--to` is the project root. Flags: `npx --yes github:vostrikovva/cursor-skills --help`. On Windows, do not put a stray `--` before the preset name (if you do, the installer ignores it).
 
-Interactive (scope, skill directory, then frontend / backend / database):
+Interactive (scope, skill directory, then Core only vs stack: frontend / backend / database):
 
 ```bash
 npx --yes github:vostrikovva/cursor-skills
 ```
 
-Non-interactive, named preset:
+**Core only** is productivity + engineering (`skills/productivity`, `skills/engineering` in this repo), without `teach-me`. Customize plus three Skips installs nothing (not an error).
+
+Named preset:
 
 ```bash
+npx --yes github:vostrikovva/cursor-skills core --to .
 npx --yes github:vostrikovva/cursor-skills react --to .
 npx --yes github:vostrikovva/cursor-skills react-ssr --to .
 npx --yes github:vostrikovva/cursor-skills tauri-desktop --to .
 npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
 npx --yes github:vostrikovva/cursor-skills backend-nest db-mongo --to .
 npx --yes github:vostrikovva/cursor-skills mobile --to .
+npx --yes github:vostrikovva/cursor-skills react --to . --force
 ```
 
 Locally, from a clone of this catalog:
@@ -55,21 +59,24 @@ npm run check-skills
 
 Installed copies default to `.cursor/skills/<name>/`. Not `~/.cursor/skills-cursor/`. If a skill “did not install”, look for `Skip, missing in catalog` in the installer output.
 
+If a skill with the same `name` is already present, the installer does **not** delete the whole destination directory. In a TTY it asks for each such skill: replace **that** copy or keep it (other skills in dest are left alone). New names from the plan are copied separately. Without a TTY (CI), any same-name skill aborts with no writes — re-run interactively with no subspace names, or pass `--force`.
+
 ## Subspaces
 
-Each subspace (except pure `db-*`) includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.
+Every subspace includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill.
 
-**Every** preset (including pure `db-*`) also installs `which-skill` (explicit invoke only).
+Core alone: the `core` preset. `typescript` is on stack presets (`react`, `react-ssr`, backends, `mobile`), not in core. `db-postgres` / `db-mongo` also extend core.
 
 | Name | Stack | Does not install |
 |------|--------|------------------|
+| `core` | productivity + engineering (`which-skill` in core) | stack, `typescript`, `teach-me` |
 | `react` | Vite + React + TS, composition, web UI guidelines | Next, `vercel-react-best-practices` |
 | `react-ssr` | Next.js and its bundler (Turbopack/webpack), Vercel RBP | Vite (`vite-react`) |
 | `tauri-desktop` | same as `react` + Tauri IPC/capabilities | RN, Nest |
 | `backend-express` | Express + TS | Nest |
 | `backend-nest` | Nest + TS | Express |
-| `db-postgres` | Drizzle + Postgres | Mongo |
-| `db-mongo` | Mongo + TS | Postgres |
+| `db-postgres` | core + Drizzle + Postgres | Mongo |
+| `db-mongo` | core + Mongo + TS | Postgres |
 | `mobile` | Vercel RN + Expo | Vite desktop |
 
 Do not install `react` and `react-ssr` into the same repository.
@@ -102,7 +109,7 @@ Descriptions below come from upstream [Reference](https://github.com/mattpocock/
 | code-review | Two-axis review of the diff since a fixed point: Standards (does it follow the repo's coding standards, plus a Fowler smell baseline?) and Spec (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so neither pollutes the other. |
 | diagnosing-bugs | Disciplined diagnosis loop for hard bugs and performance regressions: build a feedback loop that goes red on this bug → minimise → hypothesise → instrument → fix → regression-test. |
 | codebase-design | Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. |
-| which-skill | Recommend which Cursor skill (built-in or from this catalog) to apply to a request. Explicit invoke only; installed with every preset. |
+| which-skill | Recommend which Cursor skill (built-in or from this catalog) to apply to a request. Explicit invoke only; part of `core`. |
 
 ### Frontend / mobile (Vercel + custom)
 

@@ -20,8 +20,6 @@ import { fileURLToPath } from "node:url";
 const catalogRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const presets = JSON.parse(readFileSync(join(catalogRoot, "presets.json"), "utf8"));
 const SKIP = "";
-/** Installed with every subspace, including pure db-* (not in core). */
-const everyPresetSkills = ["which-skill"];
 
 function usage() {
   const names = Object.keys(presets).join(", ");
@@ -34,11 +32,15 @@ Usage:
   node scripts/install-subspace.mjs <subspace...> [options]
 
 With no subspace names and a TTY, prompts for install scope, skill directory,
-project directory (local), then frontend / backend / database.
+project directory (local), then Core only vs customize stack (frontend / backend /
+database). Core only is skills/productivity + skills/engineering (no teach-me).
 
 Default: local project, .cursor/skills (preferred over .agents/skills).
 Do not install into ~/.cursor/skills-cursor/ (Cursor internals).
 Do not mix react and react-ssr in one project.
+
+Every subspace includes core. Install core alone with the "core" subspace or
+the Core only prompt.
 
 Cursor loads skills from:
   .cursor/skills/          project-level  (default)
@@ -47,6 +49,11 @@ Cursor loads skills from:
   ~/.agents/skills/        user-level (global)
 
 Copies each skill folder from this catalog into the chosen directory only.
+Never deletes the whole destination directory. If a skill with the same name
+is already installed, an interactive terminal asks whether to replace that
+skill or keep the existing copy. Without a TTY, the installer aborts so it
+does not overwrite silently — re-run interactively (no subspace names) or
+pass --force.
 
 Options:
   --to <dir>              Local project root (default: current directory).
@@ -54,6 +61,8 @@ Options:
   -g, --global            User-level install (all projects).
   --skill-dir cursor      Project .cursor/skills or ~/.cursor/skills (default)
   --skill-dir agents      Project .agents/skills or ~/.agents/skills
+  --force                 Overwrite already-installed skills with the same name
+                          without prompting
   --dry-run               Print the skill list and dest without installing
   --list                  List subspaces and the skills they expand to
   --help                  Show this help
@@ -62,11 +71,13 @@ Subspaces: ${names}
 
 Examples:
   npx --yes github:vostrikovva/cursor-skills
+  npx --yes github:vostrikovva/cursor-skills core --to .
   npx --yes github:vostrikovva/cursor-skills react --to .
   npx --yes github:vostrikovva/cursor-skills react --to . --skill-dir agents
   npx --yes github:vostrikovva/cursor-skills react --global
   npx --yes github:vostrikovva/cursor-skills react --global --skill-dir agents
   npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
+  npx --yes github:vostrikovva/cursor-skills react --to . --force
 `);
 }
 
@@ -89,10 +100,6 @@ function unique(list) {
   return [...new Set(list)];
 }
 
-function withEveryPreset(list) {
-  return unique([...everyPresetSkills, ...list]);
-}
-
 function parseSkillDir(value) {
   if (value !== "cursor" && value !== "agents") {
     throw new Error('--skill-dir must be "cursor" or "agents"');
@@ -106,6 +113,7 @@ function parseArgs(argv) {
   let globalInstall = false;
   let skillDir = null;
   let dryRun = false;
+  let force = false;
   let list = false;
   let help = false;
   for (let i = 0; i < argv.length; i++) {
@@ -140,6 +148,10 @@ function parseArgs(argv) {
       dryRun = true;
       continue;
     }
+    if (a === "--force") {
+      force = true;
+      continue;
+    }
     if (a.startsWith("-")) {
       throw new Error(`Unknown flag: ${a}`);
     }
@@ -154,6 +166,7 @@ function parseArgs(argv) {
     globalInstall,
     skillDir,
     dryRun,
+    force,
     list,
     help,
   };
@@ -161,7 +174,7 @@ function parseArgs(argv) {
 
 function listPresets() {
   for (const name of Object.keys(presets)) {
-    console.log(`${name}: ${withEveryPreset(expand(name)).join(", ")}`);
+    console.log(`${name}: ${unique(expand(name)).join(", ")}`);
   }
 }
 
@@ -171,6 +184,21 @@ function isTty() {
 
 async function promptPresets() {
   if (!isTty()) return null;
+
+  const mode = await select({
+    message: "What to install",
+    choices: [
+      {
+        name: "Core only — productivity + engineering (skills/productivity, skills/engineering)",
+        value: "core-only",
+      },
+      {
+        name: "Customize stack — frontend / backend / database",
+        value: "customize",
+      },
+    ],
+  });
+  if (mode === "core-only") return ["core"];
 
   const frontend = await select({
     message: "Frontend",
@@ -199,11 +227,7 @@ async function promptPresets() {
     ],
   });
 
-  const names = [frontend, backend, database].filter(Boolean);
-  if (names.length === 0) {
-    throw new Error("Select at least one of frontend, backend, or database.");
-  }
-  return names;
+  return [frontend, backend, database].filter(Boolean);
 }
 
 async function resolveInstallTarget(parsed) {
@@ -307,6 +331,80 @@ function catalogSkillsByName() {
   return map;
 }
 
+function partitionByExisting(skills, destDir) {
+  const fresh = [];
+  const conflicts = [];
+  for (const name of skills) {
+    if (existsSync(join(destDir, name))) conflicts.push(name);
+    else fresh.push(name);
+  }
+  return { fresh, conflicts };
+}
+
+function nonTtyConflictError(conflicts, destDir) {
+  const listed = conflicts.join(", ");
+  return `These skills are already installed in ${destDir}: ${listed}
+
+Silent overwrite is disabled so existing copies are not replaced without confirmation.
+
+Re-run in an interactive terminal without subspace names:
+  npx --yes github:vostrikovva/cursor-skills
+Then answer Replace or Skip for each already-installed skill (that skill only; the rest of the destination is left alone).
+
+Or re-run the same command with --force to overwrite every conflicting skill.`;
+}
+
+async function resolveConflicts(skills, destDir, force) {
+  const { fresh, conflicts } = partitionByExisting(skills, destDir);
+  if (conflicts.length === 0) {
+    return { toCopy: skills, skipped: [] };
+  }
+  if (force) {
+    return { toCopy: skills, skipped: [] };
+  }
+  if (!isTty()) {
+    throw new Error(nonTtyConflictError(conflicts, destDir));
+  }
+
+  const replace = new Set();
+  const skipped = [];
+  let remaining = null;
+  for (const name of conflicts) {
+    if (remaining === "replace") {
+      replace.add(name);
+      continue;
+    }
+    if (remaining === "skip") {
+      skipped.push(name);
+      continue;
+    }
+    const dest = join(destDir, name);
+    const choice = await select({
+      message: `"${name}" is already installed at ${dest}. Overwrite this skill only?`,
+      choices: [
+        { name: "Replace this skill", value: "replace" },
+        { name: "Keep existing (do not overwrite this skill)", value: "skip" },
+        { name: "Replace this and remaining conflicts", value: "replace-remaining" },
+        { name: "Keep existing for this and remaining conflicts", value: "skip-remaining" },
+      ],
+    });
+    if (choice === "replace") {
+      replace.add(name);
+    } else if (choice === "skip") {
+      skipped.push(name);
+    } else if (choice === "replace-remaining") {
+      replace.add(name);
+      remaining = "replace";
+    } else {
+      skipped.push(name);
+      remaining = "skip";
+    }
+  }
+
+  const toCopy = [...fresh, ...conflicts.filter((name) => replace.has(name))];
+  return { toCopy, skipped };
+}
+
 function installSkills(skills, destDir) {
   const index = catalogSkillsByName();
   mkdirSync(destDir, { recursive: true });
@@ -320,11 +418,10 @@ function installSkills(skills, destDir) {
     rmSync(dest, { recursive: true, force: true });
     cpSync(src, dest, { recursive: true });
   }
-  console.log("Installed to:", destDir);
 }
 
-function install({ names, to, dryRun, globalInstall, skillDir }) {
-  const skills = withEveryPreset(names.flatMap((n) => expand(n)));
+async function install({ names, to, dryRun, force, globalInstall, skillDir }) {
+  const skills = unique(names.flatMap((n) => expand(n)));
 
   if (skills.includes("vite-react") && skills.includes("nextjs")) {
     console.warn(
@@ -345,7 +442,17 @@ function install({ names, to, dryRun, globalInstall, skillDir }) {
     process.exit(0);
   }
 
-  installSkills(skills, chosenDir);
+  const { toCopy, skipped } = await resolveConflicts(skills, chosenDir, force);
+  if (toCopy.length > 0) {
+    installSkills(toCopy, chosenDir);
+    console.log("Installed to:", chosenDir);
+    if (toCopy.length) console.log("Wrote:", toCopy.join(", "));
+  } else {
+    console.log("No skills written.");
+  }
+  if (skipped.length > 0) {
+    console.log("Left unchanged:", skipped.join(", "));
+  }
   process.exit(0);
 }
 
@@ -366,14 +473,18 @@ async function main() {
   let names = parsed.names;
   if (names.length === 0) {
     const picked = await promptPresets();
-    if (!picked) {
+    if (picked === null) {
       usage();
       process.exit(1);
+    }
+    if (picked.length === 0) {
+      console.log("No skills installed.");
+      process.exit(0);
     }
     names = picked;
   }
 
-  install({ names, dryRun: parsed.dryRun, ...target });
+  await install({ names, dryRun: parsed.dryRun, force: parsed.force, ...target });
 }
 
 main().catch((err) => {
