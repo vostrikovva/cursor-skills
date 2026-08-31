@@ -23,9 +23,9 @@ flowchart TB
 
 ## Ядро `core`
 
-`grilling`, `grill-me`, `grill-with-docs`, `domain-modeling`, `to-spec`, `to-tickets`, `tdd`, `implement`, `code-review`, `diagnosing-bugs`, `codebase-design`, `typescript`.
+`grilling`, `grill-me`, `teach-me`, `grill-with-docs`, `domain-modeling`, `to-spec`, `to-tickets`, `tdd`, `implement`, `code-review`, `diagnosing-bugs`, `codebase-design`, `typescript`.
 
-Не в core: `teach`, `wayfinder`, `wizard`, `research`, `improve-codebase-architecture`, Claude-only `misc`. `implement`: коммит только по явной просьбе.
+Не в core: Pocock `teach` (другой скилл; у нас `teach-me`), `wayfinder`, `wizard`, `research`, `improve-codebase-architecture`, Claude-only `misc`. `implement`: коммит только по явной просьбе.
 
 `which-skill` не в Pocock-ядре: установщик добавляет его **ко всем** подпространствам (включая чистые `db-*`). Только явный вызов (`disable-model-invocation`).
 
