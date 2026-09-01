@@ -13,12 +13,13 @@
       "code-review",
       "diagnosing-bugs",
       "codebase-design",
-      "typescript"
+      "which-skill"
     ]
   },
   "react": {
     "extends": ["core"],
     "skills": [
+      "typescript",
       "vite-react",
       "vercel-composition-patterns",
       "web-design-guidelines"
@@ -27,6 +28,7 @@
   "react-ssr": {
     "extends": ["core"],
     "skills": [
+      "typescript",
       "nextjs",
       "vercel-react-best-practices",
       "vercel-composition-patterns",
@@ -39,20 +41,22 @@
   },
   "backend-express": {
     "extends": ["core"],
-    "skills": ["express-api"]
+    "skills": ["typescript", "express-api"]
   },
   "backend-nest": {
     "extends": ["core"],
-    "skills": ["nestjs"]
+    "skills": ["typescript", "nestjs"]
   },
   "db-postgres": {
+    "extends": ["core"],
     "skills": ["postgres-drizzle"]
   },
   "db-mongo": {
+    "extends": ["core"],
     "skills": ["mongodb"]
   },
   "mobile": {
     "extends": ["core"],
-    "skills": ["vercel-react-native-skills", "expo-rn"]
+    "skills": ["typescript", "vercel-react-native-skills", "expo-rn"]
   }
 }

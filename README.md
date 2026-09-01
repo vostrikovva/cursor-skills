@@ -6,27 +6,31 @@
 
 Формат тот же, что у Claude (`SKILL.md`), но вызовы завязаны на Cursor: в чате называйте скилл по `name`, не ждите `/grill-me` как в Claude Code.
 
-План: [plans/skills-security-merge.md](plans/skills-security-merge.md). Риски: [SECURITY.md](SECURITY.md). Оригинальная часть: MIT ([LICENSE](LICENSE)). Вендор: [NOTICE.md](NOTICE.md). SHA апстрима: [SOURCES.md](SOURCES.md).
+План состава: [plans/skills-security-merge.md](plans/skills-security-merge.md). Установка core и замена по имени: [plans/install-core-only.md](plans/install-core-only.md). Риски: [SECURITY.md](SECURITY.md). Оригинальная часть: MIT ([LICENSE](LICENSE)). Вендор: [NOTICE.md](NOTICE.md). SHA апстрима: [SOURCES.md](SOURCES.md).
 
 ## Установка в проект
 
 Репозиторий: [vostrikovva/cursor-skills](https://github.com/vostrikovva/cursor-skills). Из каталога **целевого приложения**. По умолчанию — **local** и **`.cursor/skills/`** (предпочтительнее `.agents/skills`). `--to` — корень проекта. Флаги: `npx --yes github:vostrikovva/cursor-skills --help`. На Windows не вставляйте лишний `--` перед именем пресета (если вставили — установщик его игнорирует).
 
-Интерактивно (scope, каталог, затем фронт / бэк / БД):
+Интерактивно (scope, каталог, затем Core only или стек фронт / бэк / БД):
 
 ```bash
 npx --yes github:vostrikovva/cursor-skills
 ```
 
+**Core only** — productivity + engineering (`skills/productivity`, `skills/engineering` в этом репо), без `teach-me`. Customize и три Skip — скиллы не ставятся (не ошибка).
+
 Без меню, сразу пресет:
 
 ```bash
+npx --yes github:vostrikovva/cursor-skills core --to .
 npx --yes github:vostrikovva/cursor-skills react --to .
 npx --yes github:vostrikovva/cursor-skills react-ssr --to .
 npx --yes github:vostrikovva/cursor-skills tauri-desktop --to .
 npx --yes github:vostrikovva/cursor-skills backend-express db-postgres --to .
 npx --yes github:vostrikovva/cursor-skills backend-nest db-mongo --to .
 npx --yes github:vostrikovva/cursor-skills mobile --to .
+npx --yes github:vostrikovva/cursor-skills react --to . --force
 ```
 
 Локально, из клона этого каталога:
@@ -55,21 +59,24 @@ npm run check-skills
 
 Копия в проекте по умолчанию: `.cursor/skills/<name>/`. Не `~/.cursor/skills-cursor/`. Если скилл «не поставился», смотрите `Skip, missing in catalog` в выводе установщика.
 
+Если скилл с тем же `name` уже стоит, установщик **не** сносит весь каталог. В интерактивном терминале спрашивает по каждому такому скиллу: заменить **эту** копию или оставить как есть (остальные скиллы в dest не трогает). Новые имена из плана копируются отдельно. Без TTY (CI) при любом таком имени — остановка без записи, просьба запустить интерактивно без имён пресетов или повторить команду с `--force`.
+
 ## Подпространства
 
-Каждое (кроме чистых `db-*`) включает **core**: grilling, grill-me, teach-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, typescript.
+Каждое подпространство включает **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill, teach-me.
 
-**Каждый** пресет (включая чистые `db-*`) дополнительно ставит `which-skill` (только явный вызов).
+Только ядро: пресет `core`. `typescript` — в стековых пресетах (`react`, `react-ssr`, бэкенд, `mobile`), не в core. `db-postgres` / `db-mongo` тоже тянут core.
 
 | Имя | Стек | Не ставит |
 |-----|------|-----------|
+| `core` | productivity + engineering (`which-skill` в ядре) | стек, `typescript`, `teach-me` |
 | `react` | Vite + React + TS, composition, web UI guidelines | Next, `vercel-react-best-practices` |
 | `react-ssr` | Next.js и его бандлер (Turbopack/webpack), RBP Vercel | Vite (`vite-react`) |
 | `tauri-desktop` | как `react` + Tauri IPC/capabilities | RN, Nest |
 | `backend-express` | Express + TS | Nest |
 | `backend-nest` | Nest + TS | Express |
-| `db-postgres` | Drizzle + Postgres | Mongo |
-| `db-mongo` | Mongo + TS | Postgres |
+| `db-postgres` | core + Drizzle + Postgres | Mongo |
+| `db-mongo` | core + Mongo + TS | Postgres |
 | `mobile` | Vercel RN + Expo | Vite desktop |
 
 Не ставьте `react` и `react-ssr` в один репозиторий.
@@ -103,7 +110,7 @@ npm run check-skills
 | code-review | Две оси по diff с фиксированной точки: Standards (стандарты репозитория плюс базовый набор запахов Fowler) и Spec (верно ли реализована исходная issue/spec). Параллельные субагенты, чтобы оси не смешивались. |
 | diagnosing-bugs | Дисциплинированный цикл для сложных багов и регрессий производительности: фидбек, который краснеет на этом баге → минимизировать → гипотеза → инструментирование → фикс → регрессионный тест. |
 | codebase-design | Общая дисциплина и словарь глубоких модулей: много поведения за узким интерфейсом, на чистом шве, тестируемость через этот интерфейс. |
-| which-skill | Рекомендует, какой скилл Cursor или этого каталога применить к запросу. Только по явному вызову; ставится во всех пресетах. |
+| which-skill | Рекомендует, какой скилл Cursor или этого каталога применить к запросу. Только по явному вызову; входит в `core`. |
 
 ### Frontend / mobile (Vercel + свои)
 
