@@ -63,7 +63,7 @@ If a skill with the same `name` is already present, the installer does **not** d
 
 ## Subspaces
 
-Every subspace includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill.
+Every subspace includes **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill, teach-me.
 
 Core alone: the `core` preset. `typescript` is on stack presets (`react`, `react-ssr`, backends, `mobile`), not in core. `db-postgres` / `db-mongo` also extend core.
 
@@ -86,7 +86,7 @@ Subspaces drop **uninstalled** skills. Cursor still puts descriptions of **insta
 ## How to use
 
 - **On their own for the task** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest, and so on — the agent may pick them up when the description matches.
-- **By name** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Write: “apply the grill-me skill”. To pick a skill: “apply the which-skill skill” plus the request.
+- **By name** (`disable-model-invocation`): `grill-me`, `teach-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Write: “apply the grill-me skill”. To pick a skill: “apply the which-skill skill” plus the request.
 - Loop: grill → spec/tickets → implement + tdd → code-review. After three consecutive failing full test suites, STOP and ask the user. Commit only if you asked for it explicitly.
 - All generated code is TypeScript `strict`.
 
@@ -100,6 +100,7 @@ Descriptions below come from upstream [Reference](https://github.com/mattpocock/
 |------|-------------|
 | grilling | Interview the user relentlessly about a plan, decision, or idea until every branch of the design tree is resolved. The reusable interview primitive behind `grill-me` and `grill-with-docs`. |
 | grill-me | Get relentlessly interviewed about a plan or design until every branch of the design tree is resolved. Explicit invoke only. |
+| teach-me | Teach a named technology in chat: brief motivation, then Q&A and beginner code hints. Does not edit project files. Explicit invoke only. |
 | grill-with-docs | Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline. |
 | domain-modeling | Actively build and sharpen a project's domain model: challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline. |
 | to-spec | Turn the current conversation into a spec and publish it to the issue tracker. No interview, just synthesizes what you've already discussed. |

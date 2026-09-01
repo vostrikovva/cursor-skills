@@ -63,7 +63,7 @@ npm run check-skills
 
 ## Подпространства
 
-Каждое подпространство включает **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill.
+Каждое подпространство включает **core**: grilling, grill-me, grill-with-docs, domain-modeling, to-spec, to-tickets, tdd, implement, code-review, diagnosing-bugs, codebase-design, which-skill, teach-me.
 
 Только ядро: пресет `core`. `typescript` — в стековых пресетах (`react`, `react-ssr`, бэкенд, `mobile`), не в core. `db-postgres` / `db-mongo` тоже тянут core.
 
@@ -86,7 +86,7 @@ npm run check-skills
 ## Как пользоваться
 
 - **Сами по задаче** (model-invoked): `tdd`, `typescript`, `vite-react`, `nextjs`, composition, UI guidelines, Express/Nest и т.д. — агент может взять их, если description совпал.
-- **По имени** (`disable-model-invocation`): `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Напишите: «примени скилл grill-me». Для выбора скилла: «примени скилл which-skill» и текст запроса.
+- **По имени** (`disable-model-invocation`): `grill-me`, `teach-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `which-skill`. Напишите: «примени скилл grill-me». Для выбора скилла: «примени скилл which-skill» и текст запроса.
 - Цикл: grill → spec/tickets → implement + tdd → code-review. После трёх подряд красных полных suite — STOP и вопрос пользователю. Коммит только если вы явно попросили.
 - Весь генерируемый код — TypeScript `strict`.
 
@@ -100,6 +100,7 @@ npm run check-skills
 |------|----------|
 | grilling | Беспощадное интервью по плану, решению или идее, пока не закрыта каждая ветка дерева решений. Переиспользуемый примитив интервью за `grill-me` и `grill-with-docs`. |
 | grill-me | То же интервью по плану или дизайну, пока не закрыта каждая ветка дерева решений — только по явному вызову. |
+| teach-me | Учит названную технологию в чате: краткая мотивация, дальше вопрос–ответ и подсказки с кодом для чайников. Файлы проекта не правит. Только по явному вызову. |
 | grill-with-docs | Сессия grill, которая ещё и строит доменную модель проекта: уточняет термины и правит `CONTEXT.md` и ADR на месте. |
 | domain-modeling | Активно строит и заостряет доменную модель: сверяет термины с глоссарием, стресс-тестирует краевыми сценариями, правит `CONTEXT.md` и ADR на месте. |
 | to-spec | Превращает текущий разговор в спецификацию и публикует её в трекер. Без нового интервью: только синтез уже сказанного. |
